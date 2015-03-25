@@ -41,3 +41,5 @@ CREATE TABLE IF NOT EXISTS `users` (
   `admin` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 AUTO_INCREMENT=1 ;
+
+INSERT INTO `rush00`.`categories` (`id`, `name`) VALUES (NULL, 'condoms'), (NULL, 'cockrings'), (NULL, 'dildos'), (NULL, 'lingeries'), (NULL, 'lubes');
