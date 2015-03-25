@@ -7,7 +7,7 @@ function load_index_php()
 
 $sql_ptr = mysqli_connect("localhost:3306", "root", "qwerty", "rush00");
 if (!$sql_ptr)
-	die("SQL connection failed.");
+	exit("mySQL error: ".mysqli_connect_error().PHP_EOL);
 ?>
 <div class="top-box">
 	<h1 class="site-title">

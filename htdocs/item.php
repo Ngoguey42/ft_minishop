@@ -16,7 +16,6 @@
 				$request = "SELECT * FROM items WHERE id='".
 					mysql_real_escape_string($_GET['id'])."';";
 				$result = mysqli_query($sql_ptr, $request);
-				echo "<br>";
 				if (mysqli_num_rows($result) > 0)
 				{
 					$row = mysqli_fetch_assoc($result);

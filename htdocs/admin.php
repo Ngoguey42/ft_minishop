@@ -10,8 +10,6 @@
 			<?php require($_SERVER['DOCUMENT_ROOT']."/header.php"); ?>
 			<div class="content-box">
 				ADMIN
-				<?php 
-				?>
 			</div>
 			<?php require($_SERVER['DOCUMENT_ROOT']."/footer.html"); ?>
 		</div>

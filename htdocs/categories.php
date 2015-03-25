@@ -16,7 +16,6 @@
 				$request = "SELECT name FROM categories WHERE id='".
 					mysql_real_escape_string($_GET['cat'])."';";
 				$result = mysqli_query($sql_ptr, $request);
-				echo "<br>";
 				if (mysqli_num_rows($result) > 0)
 				{
 					$row = mysqli_fetch_assoc($result);
@@ -27,7 +26,6 @@
 				$request = "SELECT id, name, price FROM items WHERE category_id='".
 					mysql_real_escape_string($_GET['cat'])."';";
 				$result = mysqli_query($sql_ptr, $request);
-				echo "<br>";
 				if (mysqli_num_rows($result) > 0)
 				{
 					$itemPage = "/item.php?id=";
