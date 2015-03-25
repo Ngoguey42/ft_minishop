@@ -7,35 +7,13 @@
 	</head>
 	<body>
 		<div class="main-box">
-			<?php require("header.html"); ?>
+			<?php require($_SERVER['DOCUMENT_ROOT']."/header.php"); ?>
 			<div class="content-box">
-
-
-
-
-
-
-
-
-
-
-
-
-				<CENTER>INDEX</CENTER>
-
-
-
-
-
-
-
-
-
-
-
-
+				INDEX
+				<?php 
+				?>
 			</div>
-			<?php require("footer.html"); ?>
+			<?php require($_SERVER['DOCUMENT_ROOT']."/footer.html"); ?>
 		</div>
 	</body>
 </html>

@@ -28,7 +28,7 @@ body{
 	position: relative;
 }
 .bottom-box div{
-	color: grey;
+	color: grey;	
 	width: 100%;
 	display: inline-block;
 	text-align: right;
@@ -36,7 +36,11 @@ body{
 	bottom: 5px; 
 	right: 5px; 
 	font-family: Arial, Helvetica, serif;
-	font-size:10px;
+	font-size:11px;
+}
+
+.bottom-box div a{
+	color: grey;
 }
 
 .top-box{

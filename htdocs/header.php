@@ -1,4 +1,14 @@
 
+<?php
+function load_index_php()
+{
+	header("location: /");
+}
+
+$sql_ptr = mysqli_connect("localhost:3306", "root", "qwerty", "rush00");
+if (!$sql_ptr)
+	die("SQL connection failed.");
+?>
 <div class="top-box">
 	<h1 class="site-title">
 		<a href="/">

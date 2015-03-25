@@ -7,9 +7,11 @@
 	</head>
 	<body>
 		<div class="main-box">
-			<?php require($_SERVER['DOCUMENT_ROOT']."/header.html"); ?>
+			<?php require($_SERVER['DOCUMENT_ROOT']."/header.php"); ?>
 			<div class="content-box">
-				<CENTER>ADMIN</CENTER>
+				ADMIN
+				<?php 
+				?>
 			</div>
 			<?php require($_SERVER['DOCUMENT_ROOT']."/footer.html"); ?>
 		</div>

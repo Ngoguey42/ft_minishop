@@ -1,4 +1,3 @@
-
 <!doctype html>
 <html>
 	<head>
@@ -8,9 +7,24 @@
 	</head>
 	<body>
 		<div class="main-box">
-			<?php require($_SERVER['DOCUMENT_ROOT']."/header.html"); ?>
+			<?php require($_SERVER['DOCUMENT_ROOT']."/header.php"); ?>
 			<div class="content-box">
-				<CENTER>ITEM <?php echo $_GET['id']?></CENTER>
+				ITEM
+				<?php 
+				if (!isset($_GET['id']))
+					load_index_php();
+				$request = "SELECT * FROM items WHERE id='".
+					mysql_real_escape_string($_GET['id'])."';";
+				$result = mysqli_query($sql_ptr, $request);
+				echo "<br>";
+				if (mysqli_num_rows($result) > 0)
+				{
+					$row = mysqli_fetch_assoc($result);
+					var_dump($row);;
+				}
+				else
+					load_index_php();
+				?>
 			</div>
 			<?php require($_SERVER['DOCUMENT_ROOT']."/footer.html"); ?>
 		</div>
