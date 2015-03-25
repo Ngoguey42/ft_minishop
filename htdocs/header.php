@@ -12,7 +12,7 @@ if (!$sql_ptr)
 <div class="top-box">
 	<h1 class="site-title">
 		<a href="/">
-			ft_minishop
+			ft_minisexshop
 		</a>
 	</h1>
 	<table>
