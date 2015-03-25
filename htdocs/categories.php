@@ -7,7 +7,7 @@
 	</head>
 	<body>
 		<div class="main-box">
-			<?php require("header.html"); ?>
+			<?php require($_SERVER['DOCUMENT_ROOT']."/header.html"); ?>
 			<div class="content-box">
 
 
@@ -23,32 +23,22 @@
 
 				<CENTER>CATEGORIE				<?php echo $_GET['cat'] ?></CENTER>
 				<?php 
-				if (!($toto = mysqli_connect("localhost:3306", "root", "qwerty")))
-					echo "toto ko";
-				else
-					echo "toto ok";
-				$titi = $_GET['cat'];
-				mysqli_query($toto, "use rush00 ;");
-				$ret = mysqli_query($toto, "SELECT * FROM categories;");
-				while ($data = mysqli_result($ret)) {
-					var_dump($data);
-				}
-				mysqli_close($toto);
-				 ?>
+				
+				/* if (!($toto = mysqli_connect("localhost:3306", "root", "qwerty")))
+				   echo "toto ko";
+				   else
+				   echo "toto ok";
+				   echo "lol";
+				   $titi = $_GET['cat'];
+				   echo "lol";
+				   /* mysqli_query($toto, "use rush00 ;"); */
+				/* echo "lol"; */
+				/* $ret = mysqli_query($toto, "SELECT * FROM categories;"); */ 
+				
 
-
-
-
-
-
-
-
-
-
-
-
+				?>
 			</div>
-			<?php require("footer.html"); ?>
+			<?php require($_SERVER['DOCUMENT_ROOT']."/footer.html"); ?>
 		</div>
 	</body>
 </html>
