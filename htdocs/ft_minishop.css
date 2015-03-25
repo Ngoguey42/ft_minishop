@@ -1,0 +1,54 @@
+body{
+	margin: 0px;
+	background-color: #505050;
+}
+
+.main-box{
+	width: 750px;
+	min-height: 1000px;
+	background-color: #500000;
+	margin-top: 5px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.top-box{
+	height: 150px;
+	width: 750px;
+	background-color: pink;
+	display: inline-block;
+	position: relative;
+}
+
+.top-box table{
+	background-color: 9966FF;
+	display: inline-block;
+	width: 100%;
+	/* margin-top: -11px; */
+	position: absolute;
+	bottom: 0px; 
+}
+.top-box table tr{
+	width: 100%;
+}
+.top-box table tr th{
+	display: inline-block;
+	width: 19.7%;
+}
+.top-box table tr a{
+	text-decoration: none;
+	color: #990066;
+	width: 19.7%;
+}
+
+.site-title{
+	/* float: left; */
+	font-family: Arial, Helvetica, serif;
+	color: #101010;
+	font-size:55px;
+	padding-left: 50px;
+}
+
+.site-title a {
+	text-decoration: none;
+}
