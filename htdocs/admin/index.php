@@ -46,6 +46,7 @@
 			?>
 			<div class="content-box">
 
+			<a href="http://ft_minishop.local.42.fr:8080/admin" style="font-size: 20px; color: green;">Refresh the data</a>
 				<!-- PRINT USERS -->
 				<div style="font-weight: bold; font-size: 20px;text-decoration: underline; margin-top: 20px; margin-bottom: 10px;">Users:</div>
 				<?php
@@ -59,7 +60,11 @@
 				<?php
 					$ret = mysqli_query($sql_ptr, "SELECT c.id, c.amount, c.user_id, u.login FROM commands c LEFT JOIN users u on c.user_id=u.id;");
 					while ($tab = mysqli_fetch_assoc($ret))
-						echo '&nbsp;&nbsp;• #'.$tab['id'].'&nbsp;'.$tab['amount'].'&euro;&nbsp;(user: '.$tab['user_id'].'&nbsp;'.$tab['login'].')&nbsp;'.'<a href="?cmddel='.$tab['id'].'" style="font-size: 12px;">delete</a><br/>';
+					{
+						if (!isset($tab['login']))
+							$tab['login'] = 'unknow';
+						echo '&nbsp;&nbsp;• #'.$tab['id'].'&nbsp;'.money_format('%!10.2n &euro;', (float)$tab['amount'] / 100.).'&nbsp;(user: '.$tab['user_id'].'&nbsp;'.$tab['login'].')&nbsp;'.'<a href="?cmddel='.$tab['id'].'" style="font-size: 12px;">delete</a><br/>';
+					}
 				?>
 			</div>
 			<?php require($_SERVER['DOCUMENT_ROOT']."/footer.html"); ?>
