@@ -8,11 +8,13 @@ function load_index_php()
 $sql_ptr = mysqli_connect("localhost:3306", "root", "qwerty", "rush00");
 if (!$sql_ptr)
 	exit("mySQL error: ".mysqli_connect_error().PHP_EOL);
+$imgs_path = "/img";
+setlocale(LC_MONETARY, 'fr_FR');
 ?>
 <div class="top-box">
 	<h1 class="site-title">
 		<a href="/">
-			ft_minishop
+			ft_miniXshop
 		</a>
 	</h1>
 	<table>
