@@ -4,7 +4,7 @@
 		<title>ft_minishop</title>
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 		<link rel="stylesheet" type="text/css" href="/ft_minishop.css">
-		<link rel="stylesheet" type="text/css" href="/item.css">
+		<link rel="stylesheet" type="text/css" href="/item_css.css">
 	</head>
 	<body>
 		<div class="main-box">
