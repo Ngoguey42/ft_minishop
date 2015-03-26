@@ -14,9 +14,7 @@ setlocale(LC_MONETARY, 'fr_FR');
 ?>
 <div class="top-box">
 	<h1 class="site-title">
-		<a href="/">
-			ft_miniXshop
-		</a>
+		<a href="/">ft_miniXshop</a>
 	</h1>
 	<table>
 		<tr>

@@ -1,13 +1,6 @@
 <?php
-function check_input()
+function newusr_check_input($sql_ptr)
 {
-	$_POST['login'] = mysqli_real_escape_string($_POST['login']);
-	$_POST['password'] = mysqli_real_escape_string($_POST['password']);
-	$_POST['lastname'] = mysqli_real_escape_string($_POST['lastname']);
-	$_POST['firstname'] = mysqli_real_escape_string($_POST['firstname']);
-	$_POST['address'] = mysqli_real_escape_string($_POST['address']);
-	$_POST['zipcode'] = mysqli_real_escape_string($_POST['zipcode']);
-	$_POST['city'] = mysqli_real_escape_string($_POST['city']);
 	if (!preg_match("/^([0-9A-Za-z]*)$/", $_POST['login']))
 		return 'Login';
 	if (!preg_match("/^([0-9A-Za-z]*)$/", $_POST['password']))
@@ -22,9 +15,16 @@ function check_input()
 		return 'Zipcode';
 	if (!preg_match("/^([A-Za-z]*)$/", $_POST['city']))
 		return 'City';
+	$_POST['login'] = mysqli_real_escape_string($sql_ptr, $_POST['login']);
+	$_POST['password'] = mysqli_real_escape_string($sql_ptr, $_POST['password']);
+	$_POST['lastname'] = mysqli_real_escape_string($sql_ptr, $_POST['lastname']);
+	$_POST['firstname'] = mysqli_real_escape_string($sql_ptr, $_POST['firstname']);
+	$_POST['address'] = mysqli_real_escape_string($sql_ptr, $_POST['address']);
+	$_POST['zipcode'] = mysqli_real_escape_string($sql_ptr, $_POST['zipcode']);
+	$_POST['city'] = mysqli_real_escape_string($sql_ptr, $_POST['city']);
 	return NULL;
 }
-function create_newusr($sql_ptr)
+function newusr_create_user($sql_ptr)
 {
 	$ret = mysqli_query($sql_ptr, 'SELECT login FROM users WHERE login="'.$_POST["login"].'";');
 	if (mysqli_num_rows($ret) == 0)
@@ -35,11 +35,47 @@ function create_newusr($sql_ptr)
 	else
 		echo '<script>alert("The login already exist.");</script>';
 }
-// function connect_usr($sql_ptr, $login, $password)
-// {
-// 	return ;
-// }
+function newusr($sql_ptr)
+{
+	if (empty($_POST['login']) || empty($_POST['password']) 
+	|| empty($_POST['lastname']) || empty($_POST['firstname'])
+	|| empty($_POST['address'])|| empty($_POST['zipcode'])
+	|| empty($_POST['city']))
+		echo '<script>alert("Please fill all the fields !");</script>';
+	else if (($err = newusr_check_input($sql_ptr)) === NULL)
+		newusr_create_user($sql_ptr);
+	else
+		echo '<script>alert("'.$err.' is invalid !");</script>';
+}
+function connectusr_sqlcomp($sql_ptr)
+{
+	$ret = mysqli_query($sql_ptr, 'SELECT * FROM users WHERE login="'.$_POST["login"].'" AND password="'.hash("Whirlpool", $_POST["password"]).'";');
+	if (mysqli_num_rows($ret) == 0)
+		return false;
+	return true;
+}
+function connectusr_check_input($sql_ptr)
+{
+	$_POST['login'] = mysqli_real_escape_string($sql_ptr, $_POST['login']);
+	$_POST['password'] = mysqli_real_escape_string($sql_ptr, $_POST['password']);
+	if (!preg_match("/^([0-9A-Za-z]*)$/", $_POST['login']) || !preg_match("/^([0-9A-Za-z]*)$/", $_POST['password']))
+		return false;
+	return true;
+}
+function connectusr($sql_ptr)
+{
+	if (empty($_POST['login']) || empty($_POST['password']))
+		echo '<script>alert("Please fill all the fields !");</script>';
+	else if (!($err = connectusr_check_input($sql_ptr)) || !connectusr_sqlcomp($sql_ptr))
+		echo '<script>alert("Wrong combinaison login/password !");</script>';
+	else
+	{
+		// CONNECT THE USER
+		echo '<script>alert("You are logged in");</script>';		
+	}	
+}
 ?>
+
 <!doctype html>
 <html>
 <head>
@@ -51,62 +87,34 @@ function create_newusr($sql_ptr)
 	<div class="main-box">
 		<?php require($_SERVER['DOCUMENT_ROOT']."/header.php"); ?>
 		<div class="content-box">
-			<!-- NEW USER -->
-				<?php 
-				if (isset($_POST['submit_type']) && $_POST['submit_type'] === 'newusr')
-				{
-					if (!isset($_POST['login']) || !isset($_POST['password']) 
-					|| !isset($_POST['lastname']) || !isset($_POST['firstname'])
-					|| !isset($_POST['address'])|| !isset($_POST['zipcode'])
-					|| !isset($_POST['city']))
-						echo '<script>alert("Please fill all the fields !");</script>';
-					else if (($err = check_input()) === NULL)
-						create_newusr($sql_ptr);
-					else
-						echo '<script>alert("'.$err.' is invalid !");</script>';
-				}
-				?>
-				<h2>NEW USER:</h2>
-				<form method="POST">
-					<input type="hidden" name="submit_type" value="newusr" />
-					<input type="text" name="login" placeholder="login" /><br/>
-					<input type="password" name="password" placeholder="password" /><br/>
-					<input type="text" name="lastname" placeholder="lastname" /><br/>
-					<input type="text" name="firstname" placeholder="firstname" /><br/>
-					<input type="text" name="address" placeholder="address" /><br/>
-					<input type="number" name="zipcode" placeholder="zipcode" /><br/>
-					<input type="text" name="city" placeholder="city" /><br/><br/>
-					<input type="submit" value="Submit" />
-				</form>
-			<!--  -->
-			<!-- CONNECT USER -->
-				<?php 
-				// if (isset($_POST['submit_type']) && $_POST['submit_type'] === 'newusr')
-				// {
-				// 	if (!isset($_POST['login']) || !isset($_POST['password']) 
-				// 	|| !isset($_POST['lastname']) || !isset($_POST['firstname'])
-				// 	|| !isset($_POST['address'])|| !isset($_POST['zipcode'])
-				// 	|| !isset($_POST['city']))
-				// 		echo '<script>alert("Please fill all the fields !");</script>';
-				// 	else if (($err = check_input()) === NULL)
-				// 		create_newusr($sql_ptr);
-				// 	else
-				// 		echo '<script>alert("'.$err.' is invalid !");</script>';
-				// }
-				?>
-<!-- 				<h2>CONNECTION:</h2>
-				<form method="POST">
-					<input type="hidden" name="submit_type" value="newusr" />
-					<input type="text" name="login" placeholder="login" /><br/>
-					<input type="password" name="password" placeholder="password" /><br/>
-					<input type="text" name="lastname" placeholder="lastname" /><br/>
-					<input type="text" name="firstname" placeholder="firstname" /><br/>
-					<input type="text" name="address" placeholder="address" /><br/>
-					<input type="number" name="zipcode" placeholder="zipcode" /><br/>
-					<input type="text" name="city" placeholder="city" /><br/><br/>
-					<input type="submit" value="Submit" />
-				</form> -->
-			<!--  -->
+			<?php
+			if (isset($_POST['submit_type']))
+			{
+				if ($_POST['submit_type'] === 'newusr')
+					newusr($sql_ptr);
+				else if ($_POST['submit_type'] === 'connect')
+					connectusr($sql_ptr);
+			}
+			?>
+			<h2>NEW USER:</h2>
+			<form method="POST">
+				<input type="hidden" name="submit_type" value="newusr" />
+				<input type="text" name="login" placeholder="login" /><br/>
+				<input type="password" name="password" placeholder="password" /><br/>
+				<input type="text" name="lastname" placeholder="lastname" /><br/>
+				<input type="text" name="firstname" placeholder="firstname" /><br/>
+				<input type="text" name="address" placeholder="address" /><br/>
+				<input type="number" name="zipcode" placeholder="zipcode" /><br/>
+				<input type="text" name="city" placeholder="city" /><br/><br/>
+				<input type="submit" value="Submit" />
+			</form>
+			<br/><h2>CONNECTION:</h2>
+			<form method="POST">
+				<input type="hidden" name="submit_type" value="connect" />
+				<input type="text" name="login" placeholder="login" /><br/>
+				<input type="password" name="password" placeholder="password" /><br/><br/>
+				<input type="submit" value="Submit" />
+			</form>
 		</div>
 		<?php require($_SERVER['DOCUMENT_ROOT']."/footer.html"); ?>
 	</div>
