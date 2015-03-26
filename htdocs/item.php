@@ -14,7 +14,7 @@
 				if (!isset($_GET['id']))
 					load_index_php();
 				$request = "SELECT * FROM items WHERE id='".
-					mysql_real_escape_string($_GET['id'])."';";
+					mysqli_real_escape_string($_GET['id'])."';";
 				$result = mysqli_query($sql_ptr, $request);
 				if (mysqli_num_rows($result) <= 0 ||
 						!($row = mysqli_fetch_assoc($result)))
@@ -28,7 +28,7 @@
 						$ipath = "$imgs_path/fallback.jpg";
 
 				$request = "SELECT name FROM categories WHERE id='".
-					mysql_real_escape_string($row['category_id'])."';";
+					mysqli_real_escape_string($row['category_id'])."';";
 				$result = mysqli_query($sql_ptr, $request);
 				$cat_name;
 				if (mysqli_num_rows($result) > 0 &&

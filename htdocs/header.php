@@ -4,6 +4,7 @@ function load_index_php()
 {
 	header("location: /");
 }
+session_start();
 $sql_ptr = mysqli_connect("localhost:3306", "root", "qwerty", "rush00");
 if (!$sql_ptr || !mysqli_set_charset($sql_ptr, "utf8"))
 	exit("mySQL error: ".mysqli_connect_error().PHP_EOL);

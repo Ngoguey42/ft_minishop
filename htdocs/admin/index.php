@@ -31,14 +31,14 @@
 				{
 					if ($_GET["usrdel"] === "1")
 						echo '<script>alert("Root cannot be removed !");</script>';
-					else if (rm_usr(mysql_real_escape_string($_GET["usrdel"]), $sql_ptr))
+					else if (rm_usr(mysqli_real_escape_string($_GET["usrdel"]), $sql_ptr))
 						echo '<script>alert("The user has been removed.");</script>';
 					else
 						echo '<script>alert("Error when trying to remove this user...");</script>';
 				}
 				else if (isset($_GET["cmddel"]))
 				{
-					if (rm_cmd(mysql_real_escape_string($_GET["cmddel"]), $sql_ptr))
+					if (rm_cmd(mysqli_real_escape_string($_GET["cmddel"]), $sql_ptr))
 						echo '<script>alert("The command has been removed.");</script>';
 					else
 						echo '<script>alert("Error when trying to remove this command...");</script>';
