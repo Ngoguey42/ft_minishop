@@ -1,18 +1,18 @@
 <?php
 	function rm_usr($id, $sql_ptr)
 	{
-		$ret = mysqli_query($sql_ptr, 'SELECT id FROM users WHERE id='.$id.';');
+		$ret = mysqli_query($sql_ptr, 'SELECT id FROM users WHERE id="'.$id.'";');
 		if (mysqli_num_rows($ret) == 0)
 			return false;
-		$ret = mysqli_query($sql_ptr, 'DELETE FROM users WHERE id='.$id.';');
+		$ret = mysqli_query($sql_ptr, 'DELETE FROM users WHERE id="'.$id.'";');
 		return true;
 	}
 	function rm_cmd($id, $sql_ptr)
 	{
-		$ret = mysqli_query($sql_ptr, 'SELECT id FROM commands WHERE id='.$id.';');
+		$ret = mysqli_query($sql_ptr, 'SELECT id FROM commands WHERE id="'.$id.'";');
 		if (mysqli_num_rows($ret) == 0)
 			return false;
-		$ret = mysqli_query($sql_ptr, 'DELETE FROM commands WHERE id='.$id.';');
+		$ret = mysqli_query($sql_ptr, 'DELETE FROM commands WHERE id="'.$id.'";');
 		return true;
 	}
 ?>
