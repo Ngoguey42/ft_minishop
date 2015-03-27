@@ -103,6 +103,8 @@ function logoutusr()
 					clear_cart();
 				else if ($_POST['submit_type'] === 'logout')
 					logoutusr();
+				else if ($_POST['submit_type'] === 'checkout')
+					checkout_cart($sql_ptr);
 			}
 			if ($_SESSION['login'] === 'root')
 				echo '<br/><a href="/admin" style="color: pink;">GO TO ADMIN PAGE<a/>';
@@ -112,7 +114,11 @@ function logoutusr()
 			<form method="POST">
 				<input type="hidden" name="submit_type" value="clrcart" />
 				<input type="submit" value="Clear cart" />
-			</form><br/>
+			</form>
+			<form method="POST">
+				<input type="hidden" name="submit_type" value="checkout" />
+				<input type="submit" value="Checkout" />
+			</form>
 			<?php if (empty($_SESSION['login'])){?>
 				<h2>NEW USER:</h2>
 				<form method="POST">
@@ -135,22 +141,20 @@ function logoutusr()
 				</form>
 			<?php }
 			else { ?>
+				<br/><h2>USER:</h2>
+				Logged as <?php echo $_SESSION['login'];?>
 				<form method="POST">
 					<input type="hidden" name="submit_type" value="logout" />
 					<input type="submit" value="Logout" />
 				</form>
-
-
-<!-- PRINT COMMANDS -->
-	<br/><h2>MY COMMANDS:</h2>
-	<?php
-		$ret = mysqli_query($sql_ptr, "SELECT c.id, c.amount, c.user_id, u.login FROM commands c LEFT JOIN users u on c.user_id=u.id WHERE u.login='".$_SESSION['login']."';");
-		while ($tab = mysqli_fetch_assoc($ret))
-		{
-			echo '&nbsp;&nbsp;• #'.$tab['id'].'&nbsp;'.money_format('%!10.2n &euro;', (float)$tab['amount'] / 100.).'<br/>';
-		}
-	?>
-<!--  -->
+			<!-- PRINT COMMANDS -->
+			<br/><h2>MY COMMANDS:</h2>
+			<?php
+				$ret = mysqli_query($sql_ptr, "SELECT c.id, c.amount, c.date FROM commands c LEFT JOIN users u on c.user_id=u.id WHERE u.login='".$_SESSION['login']."';");
+				while ($tab = mysqli_fetch_assoc($ret))
+					echo '&nbsp;&nbsp;• Command #'.$tab['id'].'&nbsp;:&nbsp;'.money_format('%!10.2n &euro;', (float)$tab['amount'] / 100.).'&nbsp;('.$tab['date'].')<br/>';
+			?>
+			<!--  -->
 
 
 

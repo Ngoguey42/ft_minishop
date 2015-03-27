@@ -25,7 +25,7 @@
 					!($ipath = "$imgs_path/".$row['id'].'.jpg') ||
 					!file_exists($_SERVER['DOCUMENT_ROOT']."$ipath") ||
 					($dat = getimagesize($_SERVER['DOCUMENT_ROOT'].$ipath)) === false ||
-					$dat['mime'] !== 'image/jpeg')						
+					$dat['mime'] !== 'image/jpeg')					
 						$ipath = "$imgs_path/fallback.jpg";
 
 				$request = "SELECT name FROM categories WHERE id='".

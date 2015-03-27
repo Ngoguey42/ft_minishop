@@ -21,5 +21,39 @@
 		$_SESSION['cart'] = serialize(array());
 		echo '<script>alert("The cart has been cleared.");</script>';
 	}
+	function checkout_cart($sql_ptr)
+	{
+		if (empty($_SESSION['cart']))
+		{
+			echo '<script>alert("Nothing to checkout...");</script>';
+			return ;
+		}
+		if (($cmd_usr_id = mysqli_query($sql_ptr, 'SELECT id FROM users WHERE login="'.$_SESSION['login'].'";')) === false)
+		{
+			echo '<script>alert("Cannot checkout (mySQL error)");</script>';
+			return ;			
+		}
+		$cmd_usr_id = mysqli_fetch_assoc($cmd_usr_id);
+		$cmd_total = 0;
+		$unserlz_cart = unserialize($_SESSION['cart']);
+		foreach ($unserlz_cart as $k)
+		{	
+			if (($ret = mysqli_query($sql_ptr, 'SELECT price FROM items WHERE id="'.$k.'";')) === false)
+			{
+				echo '<script>alert("Cannot checkout (mySQL error)");</script>';
+				return ;			
+			}
+			$ret = mysqli_fetch_assoc($ret);
+			$cmd_total += $ret['price'];
+		}
+		// $request = 'INSERT INTO commands (`id`, `user_id`, `items`, `amount`, `date`) VALUES (NULL, '.$cmd_usr_id['id'].', '.'toto'.', '.$cmd_total.', NOW());';
+		// if (($ret = mysqli_query($sql_ptr, $request)) === false)
+		// {
+		// 	echo '<script>alert("Cannot checkout (mySQL error)");</script>';
+		// 	return ;			
+		// }	
+		// $_SESSION['cart'] = serialize(array());
+		echo '<script>alert("Order confirmed.");</script>';
+	}
 	load_cart($cart, $sql_ptr);
 ?>
