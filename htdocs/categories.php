@@ -11,10 +11,11 @@
 			<?php require($_SERVER['DOCUMENT_ROOT']."/header.php"); ?>
 			<div class="content-box">
 				<?php 
+				require($_SERVER['DOCUMENT_ROOT']."/cart.php");
 				if (!isset($_GET['cat']))
 					load_index_php();
 				$request = "SELECT name FROM categories WHERE id='".
-					mysqli_real_escape_string($_GET['cat'])."';";
+					mysqli_real_escape_string($sql_ptr, $_GET['cat'])."';";
 				$result = mysqli_query($sql_ptr, $request);
 				if (mysqli_num_rows($result) <= 0 ||
 						!($row = mysqli_fetch_assoc($result)))
@@ -22,7 +23,7 @@
 					
 				echo '<div class="cat-header">'.ucfirst($row['name']).'</div>';
 				$request = "SELECT id, name, price FROM items WHERE category_id='".
-					mysqli_real_escape_string($_GET['cat'])."';";
+					mysqli_real_escape_string($sql_ptr, $_GET['cat'])."';";
 				$result = mysqli_query($sql_ptr, $request);
 				if (mysqli_num_rows($result) > 0)
 				{

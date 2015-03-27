@@ -45,7 +45,7 @@
 				}
 			?>
 			<div class="content-box">
-				<a href="http://ft_minishop.local.42.fr:8080/admin" style="font-size: 20px; color: green;">Refresh the data</a>
+				<a href="http://ft_minishop.local.42.fr:8080/admin" style="font-size: 20px; color: green;">Refresh</a>
 				<!-- PRINT USERS -->
 					<div style="font-weight: bold; font-size: 20px;text-decoration: underline; margin-top: 20px; margin-bottom: 10px;">Users:</div>
 					<?php

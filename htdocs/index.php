@@ -33,7 +33,7 @@ function newusr_create_user($sql_ptr)
 		echo '<script>alert("User created, you can now connect yourself.");</script>';
 	}
 	else
-		echo '<script>alert("The login already exist.");</script>';
+		echo '<script>alert("This login already exist.");</script>';
 }
 function newusr($sql_ptr)
 {
@@ -71,7 +71,7 @@ function connectusr($sql_ptr)
 	else
 	{
 		// CONNECT THE USER
-		echo '<script>alert("You are logged in");</script>';		
+		echo '<script>alert("You are logged in");</script>';	
 	}	
 }
 ?>
@@ -85,17 +85,26 @@ function connectusr($sql_ptr)
 </head>
 <body>
 	<div class="main-box">
-		<?php require($_SERVER['DOCUMENT_ROOT']."/header.php"); ?>
+		<?php require($_SERVER['DOCUMENT_ROOT']."/header.php");?>
 		<div class="content-box">
 			<?php
+			require($_SERVER['DOCUMENT_ROOT']."/cart.php");
 			if (isset($_POST['submit_type']))
 			{
 				if ($_POST['submit_type'] === 'newusr')
 					newusr($sql_ptr);
 				else if ($_POST['submit_type'] === 'connect')
 					connectusr($sql_ptr);
+				else if ($_POST['submit_type'] === 'clrcart')
+					clear_cart();
 			}
 			?>
+			<h2>CART:</h2>
+			<?php print_cart($sql_ptr);?>
+			<form method="POST">
+				<input type="hidden" name="submit_type" value="clrcart" />
+				<input type="submit" value="Clear cart" />
+			</form><br/>
 			<h2>NEW USER:</h2>
 			<form method="POST">
 				<input type="hidden" name="submit_type" value="newusr" />
