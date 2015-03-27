@@ -70,9 +70,13 @@ function connectusr($sql_ptr)
 		echo '<script>alert("Wrong combinaison login/password !");</script>';
 	else
 	{
-		// CONNECT THE USER
+		$_SESSION['login'] = $_POST['login'];
 		echo '<script>alert("You are logged in");</script>';	
 	}	
+}
+function logoutusr()
+{
+	$_SESSION['login'] = '';
 }
 ?>
 
@@ -97,7 +101,11 @@ function connectusr($sql_ptr)
 					connectusr($sql_ptr);
 				else if ($_POST['submit_type'] === 'clrcart')
 					clear_cart();
+				else if ($_POST['submit_type'] === 'logout')
+					logoutusr();
 			}
+			if ($_SESSION['login'] === 'root')
+				echo '<br/><a href="/admin" style="color: pink;">GO TO ADMIN PAGE<a/>';
 			?>
 			<h2>CART:</h2>
 			<?php print_cart($sql_ptr);?>
@@ -105,25 +113,50 @@ function connectusr($sql_ptr)
 				<input type="hidden" name="submit_type" value="clrcart" />
 				<input type="submit" value="Clear cart" />
 			</form><br/>
-			<h2>NEW USER:</h2>
-			<form method="POST">
-				<input type="hidden" name="submit_type" value="newusr" />
-				<input type="text" name="login" placeholder="login" /><br/>
-				<input type="password" name="password" placeholder="password" /><br/>
-				<input type="text" name="lastname" placeholder="lastname" /><br/>
-				<input type="text" name="firstname" placeholder="firstname" /><br/>
-				<input type="text" name="address" placeholder="address" /><br/>
-				<input type="number" name="zipcode" placeholder="zipcode" /><br/>
-				<input type="text" name="city" placeholder="city" /><br/><br/>
-				<input type="submit" value="Submit" />
-			</form>
-			<br/><h2>CONNECTION:</h2>
-			<form method="POST">
-				<input type="hidden" name="submit_type" value="connect" />
-				<input type="text" name="login" placeholder="login" /><br/>
-				<input type="password" name="password" placeholder="password" /><br/><br/>
-				<input type="submit" value="Submit" />
-			</form>
+			<?php if (empty($_SESSION['login'])){?>
+				<h2>NEW USER:</h2>
+				<form method="POST">
+					<input type="hidden" name="submit_type" value="newusr" />
+					<input type="text" name="login" placeholder="login" /><br/>
+					<input type="password" name="password" placeholder="password" /><br/>
+					<input type="text" name="lastname" placeholder="lastname" /><br/>
+					<input type="text" name="firstname" placeholder="firstname" /><br/>
+					<input type="text" name="address" placeholder="address" /><br/>
+					<input type="number" name="zipcode" placeholder="zipcode" /><br/>
+					<input type="text" name="city" placeholder="city" /><br/><br/>
+					<input type="submit" value="Submit" />
+				</form>
+				<br/><h2>CONNECTION:</h2>
+				<form method="POST">
+					<input type="hidden" name="submit_type" value="connect" />
+					<input type="text" name="login" placeholder="login" /><br/>
+					<input type="password" name="password" placeholder="password" /><br/><br/>
+					<input type="submit" value="Submit" />
+				</form>
+			<?php }
+			else { ?>
+				<form method="POST">
+					<input type="hidden" name="submit_type" value="logout" />
+					<input type="submit" value="Logout" />
+				</form>
+
+
+<!-- PRINT COMMANDS -->
+	<br/><h2>MY COMMANDS:</h2>
+	<?php
+		$ret = mysqli_query($sql_ptr, "SELECT c.id, c.amount, c.user_id, u.login FROM commands c LEFT JOIN users u on c.user_id=u.id WHERE user_id='';");
+		while ($tab = mysqli_fetch_assoc($ret))
+		{
+			if (!isset($tab['login']))
+				$tab['login'] = 'unknow';
+			echo '&nbsp;&nbsp;• #'.$tab['id'].'&nbsp;'.money_format('%!10.2n &euro;', (float)$tab['amount'] / 100.).'&nbsp;(user: '.$tab['user_id'].'&nbsp;'.$tab['login'].')&nbsp;'.'<a href="?cmddel='.$tab['id'].'" style="font-size: 12px;">delete</a><br/>';
+		}
+	?>
+<!--  -->
+
+
+
+			<?php }?>
 		</div>
 		<?php require($_SERVER['DOCUMENT_ROOT']."/footer.html"); ?>
 	</div>

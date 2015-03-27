@@ -27,6 +27,8 @@
 		<div class="main-box">
 			<?php
 				require($_SERVER['DOCUMENT_ROOT']."/header.php"); 
+				if ($_SESSION['login'] !== 'root')
+					load_index_php();
 				if (isset($_GET["usrdel"]))
 				{
 					if ($_GET["usrdel"] === "1")

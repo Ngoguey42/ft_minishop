@@ -47,10 +47,18 @@
 					$row['name'].
 					'<br/>'.
 					money_format('%!10.2n &euro;', (float)$row['price'] / 100.).
-					'<br/><div class="to_cart"><a href="'.
-					'">Add to Cart</a></div></div>';
-				?>
-				
+					'<br/><div class="to_cart">';?>
+				<!-- BUTTON ADD TO CART -->
+					<form method="POST">
+						<input type="hidden" name="submit_type" value="addtocart" />
+						<input type="submit" value="Add to cart" />
+					</form>
+					<?php
+						if (isset($_POST['submit_type']) && $_POST['submit_type'] == 'addtocart')
+							add_to_cart($cart);
+					?>
+				<!--  -->
+				</div></div>
 			</div>
 			<?php require($_SERVER['DOCUMENT_ROOT']."/footer.html"); ?>
 		</div>

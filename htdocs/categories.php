@@ -10,7 +10,7 @@
 		<div class="main-box">
 			<?php require($_SERVER['DOCUMENT_ROOT']."/header.php"); ?>
 			<div class="content-box">
-				if (!isset($_GET['cat']))
+				<?php if (!isset($_GET['cat']))
 					load_index_php();
 				$request = "SELECT name FROM categories WHERE id='".
 					mysqli_real_escape_string($sql_ptr, $_GET['cat'])."';";
