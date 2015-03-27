@@ -11,7 +11,6 @@
 			<?php require($_SERVER['DOCUMENT_ROOT']."/header.php"); ?>
 			<div class="content-box">
 				<?php 
-				require($_SERVER['DOCUMENT_ROOT']."/cart.php");
 				if (!isset($_GET['cat']))
 					load_index_php();
 				$request = "SELECT name FROM categories WHERE id='".

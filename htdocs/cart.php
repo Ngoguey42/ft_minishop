@@ -16,7 +16,7 @@
 	{
 		var_dump($_SESSION['cart']);
 	}
-	// function add_to_cart($sql_ptr)
+	// function add_to_cart($sql_ptr, $id)
 	// {
 
 	// }
