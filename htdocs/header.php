@@ -25,7 +25,6 @@ if (!$sql_ptr || !mysqli_set_charset($sql_ptr, "utf8"))
 	exit("mySQL error: ".mysqli_connect_error().PHP_EOL);
 $imgs_path = "/img";
 setlocale(LC_MONETARY, 'fr_FR');
-/* var_dump($_SERVER); */
 
 if (!empty($_SESSION['last_action']))
 {
@@ -34,7 +33,6 @@ if (!empty($_SESSION['last_action']))
 		'</div>';
 	$_SESSION['last_action'] = NULL;
 }
-/* var_dump($_SESSION); */
 
 ?>
 <div class="top-box">

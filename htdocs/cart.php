@@ -8,7 +8,29 @@
 	}
 	function print_cart($sql_ptr)
 	{
-		var_dump($_SESSION['cart']);
+		if (empty($_SESSION['cart']))
+		{
+			echo "Cart is empty...";
+			return ;
+		}
+		foreach (array_count_values(explode(";", $_SESSION['cart'])) as $k => $v)
+		{
+			if (($ret = mysqli_query($sql_ptr, 'SELECT name, price FROM items WHERE id="'.$k.'";')) === false)
+				save_action_and_reload("Cannot print the cart (mySQL error)");
+			$ret = mysqli_fetch_assoc($ret);
+			if (!empty($ret['name']) && !empty($ret['price']))
+				echo ($ret['price'] * $v / 100)."&euro;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;".$ret['name']." x".$v."<br/>";
+		}
+		$total = 0;
+		foreach (explode(";", $_SESSION['cart']) as $k)
+		{
+			if (($ret = mysqli_query($sql_ptr, 'SELECT price FROM items WHERE id="'.$k.'";')) === false)
+				save_action_and_reload("Cannot print the cart (mySQL error)");
+			$ret = mysqli_fetch_assoc($ret);
+			if (!empty($ret['price']))
+				$total += $ret['price']/100;
+		}
+		echo "<h4>TOTAL : &nbsp;".$total."&euro;</h4>";
 	}
 	function add_to_cart(&$cart)
 	{
@@ -25,12 +47,11 @@
 	}
 	function checkout_cart($sql_ptr)
 	{
-		var_dump($_SESSION['cart']);
 		if (empty($_SESSION['cart']))
 			save_action_and_reload("Nothing to checkout");
 		if (empty($_SESSION['login']))
 			save_action_and_reload("You must be connected to checkout");
-			if (($cmd_usr_id = mysqli_query($sql_ptr, 'SELECT id FROM users WHERE login="'.$_SESSION['login'].'";')) === false)
+		if (($cmd_usr_id = mysqli_query($sql_ptr, 'SELECT id FROM users WHERE login="'.$_SESSION['login'].'";')) === false)
 			save_action_and_reload("Cannot checkout (mySQL error)");
 		$cmd_usr_id = mysqli_fetch_assoc($cmd_usr_id);
 		$cmd_total = 0;
