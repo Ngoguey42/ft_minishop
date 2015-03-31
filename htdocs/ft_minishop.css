@@ -43,6 +43,18 @@ body{
 	color: grey;
 }
 
+.top-alert-box{
+	height: 25px;
+	width: 750px;
+	background-color: green;
+	display: inline-block;
+	text-align: center;
+	position: relative;
+	font-family: Arial, Helvetica, serif;
+	color: #101010;
+	font-size:20px;
+}
+
 .top-box{
 	height: 150px;
 	width: 750px;

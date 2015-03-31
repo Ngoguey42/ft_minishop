@@ -30,10 +30,12 @@ function newusr_create_user($sql_ptr)
 	if (mysqli_num_rows($ret) == 0)
 	{
 		$ret = mysqli_query($sql_ptr, "INSERT INTO `users` (id, login, password, lastname, firstname, address, zipcode, city, admin) VALUES (NULL, '".$_POST["login"]."', '".hash("Whirlpool", $_POST["password"])."', '".$_POST["lastname"]."', '".$_POST["firstname"]."', '".$_POST["address"]."', '".$_POST["zipcode"]."', '".$_POST["city"]."', 0);");
-		echo '<script>alert("User created, you can now connect yourself.");</script>';
+		save_action_and_reload("User created, you can now connect yourself");
+		/* 		echo '<script>alert("User created, you can now connect yourself.");</script>'; */
 	}
 	else
-		echo '<script>alert("This login already exist.");</script>';
+		save_action_and_reload("This login already exist");
+			/* 		echo '<script>alert("This login already exist.");</script>'; */
 }
 function newusr($sql_ptr)
 {
@@ -41,11 +43,13 @@ function newusr($sql_ptr)
 	|| empty($_POST['lastname']) || empty($_POST['firstname'])
 	|| empty($_POST['address'])|| empty($_POST['zipcode'])
 	|| empty($_POST['city']))
-		echo '<script>alert("Please fill all the fields !");</script>';
+		save_action_and_reload("Please fill all the fields");
+	/* 		echo '<script>alert("Please fill all the fields !");</script>'; */
 	else if (($err = newusr_check_input($sql_ptr)) === NULL)
 		newusr_create_user($sql_ptr);
 	else
-		echo '<script>alert("'.$err.' is invalid !");</script>';
+		save_action_and_reload($err." is invalid !");
+/* 		echo '<script>alert("'.$err.' is invalid !");</script>'; */
 }
 function connectusr_sqlcomp($sql_ptr)
 {
@@ -65,18 +69,21 @@ function connectusr_check_input($sql_ptr)
 function connectusr($sql_ptr)
 {
 	if (empty($_POST['login']) || empty($_POST['password']))
-		echo '<script>alert("Please fill all the fields !");</script>';
+		save_action_and_reload("Please fill all the fields");
+	/* 		echo '<script>alert("Please fill all the fields !");</script>'; */
 	else if (!($err = connectusr_check_input($sql_ptr)) || !connectusr_sqlcomp($sql_ptr))
-		echo '<script>alert("Wrong combinaison login/password !");</script>';
+		/* 		echo '<script>alert("Wrong combinaison login/password !");</script>'; */
+		save_action_and_reload("Wrong combinaison login/password");
 	else
 	{
 		$_SESSION['login'] = $_POST['login'];
-		echo '<script>alert("You are logged in");</script>';	
+		save_action_and_reload("You are now logged in as ".$_POST['login']);
 	}	
 }
 function logoutusr()
 {
 	$_SESSION['login'] = '';
+	save_action_and_reload("Logged out");
 }
 ?>
 
@@ -152,7 +159,7 @@ function logoutusr()
 			<?php
 				$ret = mysqli_query($sql_ptr, "SELECT c.id, c.amount, c.date FROM commands c LEFT JOIN users u on c.user_id=u.id WHERE u.login='".$_SESSION['login']."';");
 				while ($tab = mysqli_fetch_assoc($ret))
-					echo '&nbsp;&nbsp;• Command #'.$tab['id'].'&nbsp;:&nbsp;'.money_format('%!10.2n &euro;', (float)$tab['amount'] / 100.).'&nbsp;('.$tab['date'].')<br/>';
+					echo '&nbsp;&nbsp;&#9679; Command #'.$tab['id'].'&nbsp;:&nbsp;'.money_format('%!10.2n &euro;', (float)$tab['amount'] / 100.).'&nbsp;('.$tab['date'].')<br/>';
 			?>
 			<!--  -->
 
