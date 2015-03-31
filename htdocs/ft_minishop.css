@@ -92,3 +92,12 @@ body{
 .site-title a {
 	text-decoration: none;
 }
+
+.half_pane{
+	width: 272px;
+	float: left;
+	border: 50px solid #837E7C;
+	display: inline-block;
+	position: relative;
+	text-align: left;
+}

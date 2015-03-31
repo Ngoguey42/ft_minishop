@@ -35,21 +35,21 @@ function newusr_create_user($sql_ptr)
 	}
 	else
 		save_action_and_reload("This login already exist");
-			/* 		echo '<script>alert("This login already exist.");</script>'; */
+	/* 		echo '<script>alert("This login already exist.");</script>'; */
 }
 function newusr($sql_ptr)
 {
 	if (empty($_POST['login']) || empty($_POST['password']) 
-	|| empty($_POST['lastname']) || empty($_POST['firstname'])
-	|| empty($_POST['address'])|| empty($_POST['zipcode'])
-	|| empty($_POST['city']))
-		save_action_and_reload("Please fill all the fields");
+		|| empty($_POST['lastname']) || empty($_POST['firstname'])
+			|| empty($_POST['address'])|| empty($_POST['zipcode'])
+				|| empty($_POST['city']))
+					save_action_and_reload("Please fill all the fields");
 	/* 		echo '<script>alert("Please fill all the fields !");</script>'; */
 	else if (($err = newusr_check_input($sql_ptr)) === NULL)
 		newusr_create_user($sql_ptr);
 	else
 		save_action_and_reload($err." is invalid !");
-/* 		echo '<script>alert("'.$err.' is invalid !");</script>'; */
+	/* 		echo '<script>alert("'.$err.' is invalid !");</script>'; */
 }
 function connectusr_sqlcomp($sql_ptr)
 {
@@ -88,13 +88,11 @@ function logoutusr()
 ?>
 
 <!doctype html>
-<html>
-<head>
+<html><head>
 	<title>ft_minishop</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/ft_minishop.css">
-</head>
-<body>
+</head><body>
 	<div class="main-box">
 		<?php require($_SERVER['DOCUMENT_ROOT']."/header.php");?>
 		<div class="content-box">
@@ -113,61 +111,21 @@ function logoutusr()
 				else if ($_POST['submit_type'] === 'checkout')
 					checkout_cart($sql_ptr);
 			}
+			echo '<div class="half_pane">';
 			if ($_SESSION['login'] === 'root')
-				echo '<br/><a href="/admin" style="color: pink;">GO TO ADMIN PAGE<a/>';
+				require($_SERVER['DOCUMENT_ROOT']."/admin_box.php");
+			if (!empty($_SESSION['login']))
+				require($_SERVER['DOCUMENT_ROOT']."/user_box.php");
+			if (!empty($_SESSION['login']))
+				require($_SERVER['DOCUMENT_ROOT']."/commands_box.php");
+			if (empty($_SESSION['login']))
+				require($_SERVER['DOCUMENT_ROOT']."/newuser_box.php");
+			echo '</div>';
+			echo '<div class="half_pane">';
+			require($_SERVER['DOCUMENT_ROOT']."/cart_box.php");
+			echo '</div>';
 			?>
-			<h2>CART:</h2>
-			<?php print_cart($sql_ptr);?>
-			<form method="POST">
-				<input type="hidden" name="submit_type" value="clrcart" />
-				<input type="submit" value="Clear cart" />
-			</form>
-			<form method="POST">
-				<input type="hidden" name="submit_type" value="checkout" />
-				<input type="submit" value="Checkout" />
-			</form>
-			<?php if (empty($_SESSION['login'])){?>
-				<h2>NEW USER:</h2>
-				<form method="POST">
-					<input type="hidden" name="submit_type" value="newusr" />
-					<input type="text" name="login" placeholder="login" /><br/>
-					<input type="password" name="password" placeholder="password" /><br/>
-					<input type="text" name="lastname" placeholder="lastname" /><br/>
-					<input type="text" name="firstname" placeholder="firstname" /><br/>
-					<input type="text" name="address" placeholder="address" /><br/>
-					<input type="number" name="zipcode" placeholder="zipcode" /><br/>
-					<input type="text" name="city" placeholder="city" /><br/><br/>
-					<input type="submit" value="Submit" />
-				</form>
-				<br/><h2>CONNECTION:</h2>
-				<form method="POST">
-					<input type="hidden" name="submit_type" value="connect" />
-					<input type="text" name="login" placeholder="login" /><br/>
-					<input type="password" name="password" placeholder="password" /><br/><br/>
-					<input type="submit" value="Submit" />
-				</form>
-			<?php }
-			else { ?>
-				<br/><h2>USER:</h2>
-				Logged as <?php echo $_SESSION['login'];?>
-				<form method="POST">
-					<input type="hidden" name="submit_type" value="logout" />
-					<input type="submit" value="Logout" />
-				</form>
-			<!-- PRINT COMMANDS -->
-			<br/><h2>MY COMMANDS:</h2>
-			<?php
-				$ret = mysqli_query($sql_ptr, "SELECT c.id, c.amount, c.date FROM commands c LEFT JOIN users u on c.user_id=u.id WHERE u.login='".$_SESSION['login']."';");
-				while ($tab = mysqli_fetch_assoc($ret))
-					echo '&nbsp;&nbsp;&#9679; Command #'.$tab['id'].'&nbsp;:&nbsp;'.money_format('%!10.2n &euro;', (float)$tab['amount'] / 100.).'&nbsp;('.$tab['date'].')<br/>';
-			?>
-			<!--  -->
-
-
-
-			<?php }?>
 		</div>
 		<?php require($_SERVER['DOCUMENT_ROOT']."/footer.html"); ?>
 	</div>
-</body>
-</html>
+</body></html>
