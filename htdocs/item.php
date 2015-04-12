@@ -51,6 +51,16 @@
 				<!-- BUTTON ADD TO CART -->
 					<form method="POST">
 						<input type="hidden" name="submit_type" value="addtocart" />
+							<div style="font-size: 15px;"><br/>Color :&nbsp;&nbsp;      
+								<SELECT>
+									<option value="black">Black</option>	
+									<option value="red">Red</option>	
+									<option value="pink">Pink</option>	
+									<option value="green">Green</option>	
+									<option value="blue">Blue</option>	
+									<option value="white">White</option>	
+								</SELECT><br/>
+							</div>
 						<input type="submit" value="Add to cart" />
 					</form>
 					<?php
