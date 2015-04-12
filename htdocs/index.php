@@ -26,10 +26,17 @@ function newusr_check_input($sql_ptr)
 }
 function newusr_create_user($sql_ptr)
 {
-	$ret = mysqli_query($sql_ptr, 'SELECT login FROM users WHERE login="'.$_POST["login"].'";');
+	$ret = mysqli_query($sql_ptr, 'SELECT login FROM users WHERE login="'.
+		mysqli_real_escape_string($sql_ptr, $_POST["login"]).'";');
 	if (mysqli_num_rows($ret) == 0)
 	{
-		$ret = mysqli_query($sql_ptr, "INSERT INTO `users` (id, login, password, lastname, firstname, address, zipcode, city, admin) VALUES (NULL, '".$_POST["login"]."', '".hash("Whirlpool", $_POST["password"])."', '".$_POST["lastname"]."', '".$_POST["firstname"]."', '".$_POST["address"]."', '".$_POST["zipcode"]."', '".$_POST["city"]."', 0);");
+		$ret = mysqli_query($sql_ptr, "INSERT INTO `users` (id, login, password, lastname, firstname, address, zipcode, city, admin) VALUES (NULL, '".
+			mysqli_real_escape_string($sql_ptr, $_POST["login"])."', '".hash("Whirlpool", $_POST["password"])."', '".
+			mysqli_real_escape_string($sql_ptr, $_POST["lastname"])."', '".
+			mysqli_real_escape_string($sql_ptr, $_POST["firstname"])."', '".
+			mysqli_real_escape_string($sql_ptr, $_POST["address"])."', '".
+			mysqli_real_escape_string($sql_ptr, $_POST["zipcode"])."', '".
+			mysqli_real_escape_string($sql_ptr, $_POST["city"])."', 0);");
 		save_action_and_reload("User created, you can now connect yourself");
 		/* 		echo '<script>alert("User created, you can now connect yourself.");</script>'; */
 	}
@@ -53,7 +60,8 @@ function newusr($sql_ptr)
 }
 function connectusr_sqlcomp($sql_ptr)
 {
-	$ret = mysqli_query($sql_ptr, 'SELECT * FROM users WHERE login="'.$_POST["login"].'" AND password="'.hash("Whirlpool", $_POST["password"]).'";');
+	$ret = mysqli_query($sql_ptr, 'SELECT * FROM users WHERE login="'.
+		mysqli_real_escape_string($sql_ptr, $_POST["login"]).'" AND password="'.hash("Whirlpool", $_POST["password"]).'";');
 	if (mysqli_num_rows($ret) == 0)
 		return false;
 	return true;
