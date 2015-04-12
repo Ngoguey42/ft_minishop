@@ -94,6 +94,7 @@ function logoutusr()
 	<title>ft_minishop</title>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 	<link rel="stylesheet" type="text/css" href="/ft_minishop.css">
+	<link rel="stylesheet" type="text/css" href="/previews_css.css">
 </head><body>
 	<div class="main-box">
 		<?php require($_SERVER['DOCUMENT_ROOT']."/header.php");?>
@@ -114,6 +115,9 @@ function logoutusr()
 					checkout_cart($sql_ptr);
 			}
 			echo '<div class="half_pane">';
+			require($_SERVER['DOCUMENT_ROOT']."/item_preview.php");			
+			echo '<br />';
+			echo '<br />';
 			if ($_SESSION['login'] === 'root')
 				require($_SERVER['DOCUMENT_ROOT']."/admin_box.php");
 			if (!empty($_SESSION['login']))
@@ -124,6 +128,7 @@ function logoutusr()
 				require($_SERVER['DOCUMENT_ROOT']."/newuser_box.php");
 			echo '</div>';
 			echo '<div class="half_pane">';
+			require($_SERVER['DOCUMENT_ROOT']."/item_preview.php");			
 			require($_SERVER['DOCUMENT_ROOT']."/cart_box.php");
 			echo '</div>';
 			?>
