@@ -18,11 +18,12 @@
 				if (mysqli_num_rows($result) <= 0 ||
 						!($row = mysqli_fetch_assoc($result)))
 					load_index_php();
-					
 				echo '<div class="cat-header">'.ucfirst($row['name']).'</div>';
-				$request = "SELECT id, name, price FROM items WHERE category_id='".
+				$request = "SELECT id, name, price FROM items ".
+					"WHERE category_id='".
 					mysqli_real_escape_string($sql_ptr, $_GET['cat'])."' OR category_id2='".
-					mysqli_real_escape_string($sql_ptr, $_GET['cat'])."';";
+					mysqli_real_escape_string($sql_ptr, $_GET['cat'])."' ".
+					"ORDER BY price DESC;";
 				$result = mysqli_query($sql_ptr, $request);
 				if (mysqli_num_rows($result) > 0)
 				{

@@ -54,7 +54,7 @@ INSERT INTO `rush00`.`items` (`id`, `category_id`, `category_id2`, `name`, `pric
 (NULL, 1, 0, 'Kitties', 80),
 (NULL, 1, 0, 'Parisians', 50),
 (NULL, 1, 0, 'Papals', 90),
-(NULL, 1, 0, 'Achings', 110),
+(NULL, 1, 2, 'Achings', 110),
 (NULL, 2, 0, 'Leather and chains', 320),
 (NULL, 2, 0, 'Full rabbit', 460),
 (NULL, 2, 0, 'Leather stretcher', 380),
