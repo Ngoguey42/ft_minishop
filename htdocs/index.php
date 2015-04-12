@@ -38,11 +38,9 @@ function newusr_create_user($sql_ptr)
 			mysqli_real_escape_string($sql_ptr, $_POST["zipcode"])."', '".
 			mysqli_real_escape_string($sql_ptr, $_POST["city"])."', 0);");
 		save_action_and_reload("User created, you can now connect yourself");
-		/* 		echo '<script>alert("User created, you can now connect yourself.");</script>'; */
 	}
 	else
 		save_action_and_reload("This login already exist");
-	/* 		echo '<script>alert("This login already exist.");</script>'; */
 }
 function newusr($sql_ptr)
 {
@@ -51,12 +49,10 @@ function newusr($sql_ptr)
 			|| empty($_POST['address'])|| empty($_POST['zipcode'])
 				|| empty($_POST['city']))
 					save_action_and_reload("Please fill all the fields");
-	/* 		echo '<script>alert("Please fill all the fields !");</script>'; */
 	else if (($err = newusr_check_input($sql_ptr)) === NULL)
 		newusr_create_user($sql_ptr);
 	else
 		save_action_and_reload($err." is invalid !");
-	/* 		echo '<script>alert("'.$err.' is invalid !");</script>'; */
 }
 function connectusr_sqlcomp($sql_ptr)
 {
@@ -78,9 +74,7 @@ function connectusr($sql_ptr)
 {
 	if (empty($_POST['login']) || empty($_POST['password']))
 		save_action_and_reload("Please fill all the fields");
-	/* 		echo '<script>alert("Please fill all the fields !");</script>'; */
 	else if (!($err = connectusr_check_input($sql_ptr)) || !connectusr_sqlcomp($sql_ptr))
-		/* 		echo '<script>alert("Wrong combinaison login/password !");</script>'; */
 		save_action_and_reload("Wrong combinaison login/password");
 	else
 	{

@@ -15,6 +15,14 @@
 		$ret = mysqli_query($sql_ptr, 'DELETE FROM commands WHERE id="'.$id.'";');
 		return true;
 	}
+	function rm_item($id, $sql_ptr)
+	{
+		$ret = mysqli_query($sql_ptr, 'SELECT id FROM items WHERE id="'.$id.'";');
+		if (mysqli_num_rows($ret) == 0)
+			return false;
+		$ret = mysqli_query($sql_ptr, 'DELETE FROM items WHERE id="'.$id.'";');
+		return true;
+	}
 ?>
 <!doctype html>
 <html>
@@ -33,22 +41,24 @@
 				{
 					if ($_GET["usrdel"] === "1")
 						save_action_and_reload_noget("Root cannot be removed");
-						/* echo '<script>alert("Root cannot be removed !");</script>'; */
 					else if (rm_usr(mysqli_real_escape_string($sql_ptr, $_GET["usrdel"]), $sql_ptr))
 						save_action_and_reload_noget("The user has been removed");
-						/* 	echo '<script>alert("The user has been removed.");</script>'; */
 					else
 						save_action_and_reload_noget("Error when trying to remove this user");
-						/* echo '<script>alert("Error when trying to remove this user...");</script>'; */
 				}
 				else if (isset($_GET["cmddel"]))
 				{
 					if (rm_cmd(mysqli_real_escape_string($sql_ptr, $_GET["cmddel"]), $sql_ptr))
 						save_action_and_reload_noget("The command has been removed");
-						/* echo '<script>alert("The command has been removed.");</script>'; */
 					else
 						save_action_and_reload_noget("Error when trying to remove this command");
-						/* echo '<script>alert("Error when trying to remove this command...");</script>'; */
+				}
+				else if (isset($_GET["itemdel"]))
+				{
+					if (rm_item(mysqli_real_escape_string($sql_ptr, $_GET["itemdel"]), $sql_ptr))
+						save_action_and_reload_noget("The item has been removed");
+					else
+						save_action_and_reload_noget("Error when trying to remove this item");
 				}
 			?>
 			<div class="content-box">
@@ -71,6 +81,14 @@
 								$tab['login'] = 'unknow';
 							echo '&nbsp;&nbsp;&#9679; #'.$tab['id'].'&nbsp;'.money_format('%!10.2n &euro;', (float)$tab['amount'] / 100.).'&nbsp;(user: '.$tab['user_id'].'&nbsp;'.$tab['login'].')&nbsp;'.'<a href="?cmddel='.$tab['id'].'" style="font-size: 12px;">delete</a><br/>';
 						}
+					?>
+				<!--  -->
+				<!-- PRINT ITEMS -->
+					<div style="font-weight: bold; font-size: 20px;text-decoration: underline; margin-top: 20px; margin-bottom: 10px;">Items:</div>
+					<?php
+						$ret = mysqli_query($sql_ptr, "SELECT items.id, items.name, items.price, categories.name 'cat' FROM items LEFT JOIN categories on items.category_id = categories.id;");
+						while ($tab = mysqli_fetch_assoc($ret))
+							echo '&nbsp;&nbsp;&#9679; #'.$tab['id'].'&nbsp;'.$tab['name'].'&nbsp;'.money_format('%!10.2n &euro;', (float)$tab['price'] / 100.).'&nbsp;'.'(cat: '.$tab['cat'].')&nbsp;<a href="?itemdel='.$tab['id'].'" style="font-size: 12px;">delete</a><br/>';
 					?>
 				<!--  -->
 			</div>

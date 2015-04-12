@@ -45,14 +45,12 @@ function add_to_cart(&$cart)
 {
 	$cart[] = $_GET['id'];
 	$_SESSION['cart'] = implode(";", $cart);
-	/* 		echo '<script>alert("Added to cart.");</script>'; */
 	save_action_and_reload("Added to cart");
 }
 function clear_cart()
 {
 	$_SESSION['cart'] = NULL;
 	save_action_and_reload("The cart has been cleared");
-	/* 		echo '<script>alert("The cart has been cleared.");</script>'; */
 }
 function checkout_cart($sql_ptr)
 {
@@ -83,7 +81,6 @@ function checkout_cart($sql_ptr)
 		save_action_and_reload("Cannot checkout (mySQL error)");
 	$_SESSION['cart'] = NULL;
 	save_action_and_reload("Order confirmed");
-	/* 		echo '<script>alert("Order confirmed.");</script>'; */
 }
 load_cart($cart, $sql_ptr);
 ?>
