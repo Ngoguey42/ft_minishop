@@ -22,8 +22,7 @@
 				$request = "SELECT id, name, price FROM items ".
 					"WHERE category_id='".
 					mysqli_real_escape_string($sql_ptr, $_GET['cat'])."' OR category_id2='".
-					mysqli_real_escape_string($sql_ptr, $_GET['cat'])."' ".
-					"ORDER BY price DESC;";
+					mysqli_real_escape_string($sql_ptr, $_GET['cat'])."';";
 				$result = mysqli_query($sql_ptr, $request);
 				if (mysqli_num_rows($result) > 0)
 				{

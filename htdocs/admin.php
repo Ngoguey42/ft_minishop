@@ -23,6 +23,19 @@
 		$ret = mysqli_query($sql_ptr, 'DELETE FROM items WHERE id="'.$id.'";');
 		return true;
 	}
+	function add_rand_item($value, $sql_ptr)
+	{
+		if ($value !== '1')
+			return false;
+		$name = array("Big-plug", "Axe", "Screwdriver", "Pen", "Cellphone", "Frying-Oil", "Keyboard");
+		$name = $name[rand(0, 6)];
+		$price = rand(10, 200) * 10;
+		$cat = rand(1, 5);
+		$query = "INSERT INTO `items` (`id`, `category_id`, `category_id2`, `name`, `price`) VALUES (NULL, ".$cat.", 0, '".$name."', ".$price.");";
+		if (mysqli_query($sql_ptr, $query) == FALSE)
+			return false;
+		return true;
+	}
 ?>
 <!doctype html>
 <html>
@@ -60,6 +73,13 @@
 					else
 						save_action_and_reload_noget("Error when trying to remove this item");
 				}
+				else if (isset($_GET["randitem"]))
+				{
+					if (add_rand_item(mysqli_real_escape_string($sql_ptr, $_GET["randitem"]), $sql_ptr))
+						save_action_and_reload_noget("A rand item has been added");
+					else
+						save_action_and_reload_noget("Error when trying to add a rand item");
+				}
 			?>
 			<div class="content-box">
 				<a href="http://ft_minishop.local.42.fr:8080/admin" style="font-size: 20px; color: green;">Refresh</a>
@@ -90,6 +110,10 @@
 						while ($tab = mysqli_fetch_assoc($ret))
 							echo '&nbsp;&nbsp;&#9679; #'.$tab['id'].'&nbsp;'.$tab['name'].'&nbsp;'.money_format('%!10.2n &euro;', (float)$tab['price'] / 100.).'&nbsp;'.'(cat: '.$tab['cat'].')&nbsp;<a href="?itemdel='.$tab['id'].'" style="font-size: 12px;">delete</a><br/>';
 					?>
+				<!--  -->
+				<!-- ADD RAND ITEM -->
+					<div style="font-weight: bold; font-size: 20px;text-decoration: underline; margin-top: 20px; margin-bottom: 10px;">Add Item:</div>
+					<a href="?randitem=1">Add a random item</a>
 				<!--  -->
 			</div>
 			<?php require($_SERVER['DOCUMENT_ROOT']."/footer.html"); ?>
