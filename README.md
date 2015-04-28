@@ -1,7 +1,7 @@
 # Piscine PHP rush#00 FT_MINISHOP, Apr 2015
 >>>>> #####Mini e-commerce website. (group project)
 
-#####Grade ``(TBD/125)`` ``(TBD/125)*``
+#####Grade ``(102/125)`` ``(102/125)``
 --------  -----------------------
 
 <br>
